@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Categorías</title>
+    <link rel="stylesheet" 
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<div th:replace="~{categoria/fragmentos :: navbar}"></div>
+
+<!-- Banner -->
+<div th:replace="~{categoria/fragmentos :: banner}"></div>
+
+<div class="container mt-3">
+
+    <!-- Botón agregar -->
+    <a href="#" class="btn btn-primary mb-3">+ Agregar Categoría</a>
+
+    <div class="row">
+        <!-- Tabla -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Listado de Categorías</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Descripción</th>
+                                <th>Imagen</th>
+                                <th>Activo</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cat : ${categorias}">
+                                <td th:text="${cat.idCategoria}"></td>
+                                <td th:text="${cat.descripcion}"></td>
+                                <td>
+                                    <img th:if="${cat.imagen != null}"
+                                         th:src="${cat.imagen}"
+                                         width="80" alt="imagen"/>
+                                </td>
+                                <td>
+                                    <span th:text="${cat.activo} ? 'Activa' : 'Inactiva'"></span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm">🗑 Eliminar</button>
+                                    <button class="btn btn-warning btn-sm">✏ Actualizar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card total -->
+        <div class="col-md-3">
+            <div class="card text-white text-center" style="background-color: #28a745;">
+                <div class="card-body">
+                    <h6 class="card-title">Total Categorías</h6>
+                    <h3 th:text="${totalCategorias}">0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

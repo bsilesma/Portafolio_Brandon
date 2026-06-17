@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <section th:fragment="agregar">
+            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
+                + Agregar Producto
+            </button>
+
+            <div class="modal fade" id="agregarProductoModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info text-white">
+                            <h5 class="modal-title">Agregar Nuevo Producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <form th:action="@{/producto/guardar}" method="POST" enctype="multipart/form-data">
+                            <div class="modal-body text-dark">
+
+                                <div class="mb-3">
+                                    <label>Categoría:</label>
+                                    <select name="categoria.idCategoria" class="form-select" required>
+                                        <option value="" disabled selected>Seleccione una categoría...</option>
+                                        <option th:each="cat : ${categorias}" th:value="${cat.idCategoria}" th:text="${cat.descripcion}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Descripción:</label>
+                                    <input type="text" name="descripcion" class="form-control" required/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Detalle:</label>
+                                    <textarea name="detalle" class="form-control" rows="2"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label>Precio:</label>
+                                        <input type="number" step="0.01" name="precio" class="form-control" required/>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label>Existencias:</label>
+                                        <input type="number" name="existencias" class="form-control" required/>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Activo:</label>
+                                    <input type="checkbox" name="activo" class="form-check-input"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Imagen:</label>
+                                    <input type="file" name="imagenFile" class="form-control" onchange="mostrarImagen(this);"/>
+                                    <img id="blah" src="#" alt="Vista previa" style="width:200px; margin-top:10px;"/>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

@@ -2,6 +2,7 @@ package pruebaTechShop.Brandon.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.List; // ¡No olvides este import!
 
 @Entity
 @Table(name = "categoria")
@@ -12,25 +13,32 @@ public class Categoria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
-    private Long idCategoria;
+    private Integer idCategoria;
 
+    @Column(unique = true, nullable = false, length = 50)
     private String descripcion;
+
+    @Column(name = "ruta_imagen", length = 1024)
+    private String rutaImagen;
+
+    @Column(name = "activo")
     private boolean activo;
-    private String rutaImagen; // <--- ESTO ES LO QUE FALTABA
+
+    // --- NUEVA RELACIÓN (Semana 6) ---
+    // Relación de uno a muchos con la clase Producto
+    // Sin "cascade" ni "orphanRemoval" para evitar la propagación de operaciones.
+    @OneToMany(mappedBy = "categoria")
+    private List<Producto> productos;
 
     public Categoria() {
     }
 
-    public Categoria(String descripcion, boolean activo) {
-        this.descripcion = descripcion;
-        this.activo = activo;
-    }
-
-    public Long getIdCategoria() {
+    // --- GETTERS Y SETTERS MANUALES ---
+    public Integer getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(Long idCategoria) {
+    public void setIdCategoria(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }
 
@@ -42,6 +50,14 @@ public class Categoria implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
+
     public boolean isActivo() {
         return activo;
     }
@@ -50,12 +66,11 @@ public class Categoria implements Serializable {
         this.activo = activo;
     }
 
-    // GETTERS Y SETTERS PARA LA RUTA DE LA IMAGEN
-    public String getRutaImagen() {
-        return rutaImagen;
+    public List<Producto> getProductos() {
+        return productos;
     }
 
-    public void setRutaImagen(String rutaImagen) {
-        this.rutaImagen = rutaImagen;
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 }

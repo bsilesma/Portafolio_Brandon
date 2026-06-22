@@ -38,7 +38,7 @@ public class Producto implements Serializable {
 
     private boolean activo;
 
-    // Conectamos Producto con Categoría en la base de datos
+    // Conectamos Producto con Categoría en la base de datos [cite: 151, 152, 153]
     @ManyToOne
     @JoinColumn(name = "id_categoria")
     private Categoria categoria;

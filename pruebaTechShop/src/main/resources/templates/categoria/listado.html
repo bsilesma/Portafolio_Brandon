@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Listado de Categorías</title>
-        <link rel="stylesheet" 
-              href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      
+    <!-- 1. Enchufamos el Head global (esto ya trae Bootstrap y los CSS) -->
+    <head th:replace="~{general/fragmentos :: head}"></head>
+    
     <body>
+        <!-- 2. Enchufamos el Header y Navbar global (el que ya reparamos) -->
+        <header th:replace="~{general/fragmentos :: header}"></header>
 
-        <div th:replace="~{categoria/fragmentos :: navbar}"></div>
-
+        <!-- 3. Mantenemos los fragmentos locales que SÍ son exclusivos de esta vista -->
         <div th:replace="~{categoria/fragmentos :: banner}"></div>
-
         <div th:replace="~{categoria/fragmentos :: mostrarToast}"></div>
 
+        <!-- Inicia tu contenido principal -->
         <div class="container mt-3">
 
             <a th:href="@{/categoria/nuevo}" class="btn btn-primary mb-3">+ Agregar Categoría</a>
@@ -41,7 +42,7 @@
                                         <td>
                                             <img th:if="${cat.rutaImagen != null}"
                                                  th:src="${cat.rutaImagen}"
-                                                 width="80" alt="imagen"/>
+                                                 width="80" alt="imagen de la categoria"/>
                                         </td>
 
                                         <td>
@@ -74,6 +75,8 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- 4. Enchufamos el Footer global para mantener la consistencia -->
+        <footer th:replace="~{general/fragmentos :: footer}"></footer>
+        
     </body>
 </html>

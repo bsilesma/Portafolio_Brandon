@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <body>
+
+        <!-- Fragmento reutilizable (DRY): un formulario de consulta parametrizado.
+             Parámetros:
+               colorForm -> clase de color de Bootstrap (ej: 'primary', 'success', 'info')
+               textoForm -> texto del botón / título del formulario
+               urlForm   -> URL a la que se envía el POST -->
+        <div th:fragment="formConsulta(colorForm, textoForm, urlForm)" class="col-md-4 mb-3">
+            <div th:classappend="'border-' + ${colorForm}" class="card h-100 border-2 shadow-sm">
+                <div th:classappend="'bg-' + ${colorForm}" class="card-header text-white fw-bold text-center">
+                    <span th:text="${textoForm}">Consulta</span>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{${urlForm}}" method="post">
+                        <div class="mb-2">
+                            <label class="form-label">Precio mínimo</label>
+                            <input type="number" step="0.01" min="0" name="precioInf"
+                                   class="form-control" th:value="${precioInf}" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Precio máximo</label>
+                            <input type="number" step="0.01" min="0" name="precioSup"
+                                   class="form-control" th:value="${precioSup}" required/>
+                        </div>
+                        <button type="submit"
+                                th:classappend="'btn-' + ${colorForm}"
+                                class="btn w-100">
+                            <i class="fas fa-search"></i> <span th:text="${textoForm}">Buscar</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

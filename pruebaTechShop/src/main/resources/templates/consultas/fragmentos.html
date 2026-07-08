@@ -27,6 +27,16 @@
             </div>
         </section>
 
+        <!-- fragmento para los formularios de consulta por rango de precio (Lec08) -->
+        <section th:fragment="consultas" class="container py-3">
+            <h4 class="text-center mb-3">Consultas por rango de precio</h4>
+            <div class="row justify-content-center">
+                <div th:replace="~{pruebas/fragmentos :: formConsulta('primary', 'Consulta Derivada', '/pruebas/consultaDerivada')}"></div>
+                <div th:replace="~{pruebas/fragmentos :: formConsulta('success', 'Consulta JPQL', '/pruebas/consultaJPQL')}"></div>
+                <div th:replace="~{pruebas/fragmentos :: formConsulta('info', 'Consulta SQL', '/pruebas/consultaSQL')}"></div>
+            </div>
+        </section>
+
         <!-- fragmento 2 para el listado de tarjetas de productos -->
         <section th:fragment="tarjetas" class="container py-4">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <body>
         <section th:fragment="agregar">
-            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
+            <!-- RETO Lec09: agregar producto es una acción solo permitida al perfil ADMIN -->
+            <button type="button" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
                 + Agregar Producto
             </button>
 

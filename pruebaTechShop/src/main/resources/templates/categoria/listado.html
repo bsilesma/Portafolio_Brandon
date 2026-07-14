@@ -17,7 +17,7 @@
         <!-- Inicia tu contenido principal -->
         <div class="container mt-3">
 
-            <a th:href="@{/categoria/nuevo}" class="btn btn-primary mb-3">+ Agregar Categoría</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/categoria/nuevo}" class="btn btn-primary mb-3">+ Agregar Categoría</a>
 
             <div class="row">
                 <div class="col-md-9">
@@ -50,12 +50,13 @@
                                         </td>
 
                                         <td>
-                                            <form th:action="@{/categoria/eliminar}" method="post" style="display:inline;">
+                                            <!-- Estas acciones solo son permitidas por quien tiene perfil ADMIN -->
+                                            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/categoria/eliminar}" method="post" style="display:inline;">
                                                 <input type="hidden" name="idCategoria" th:value="${cat.idCategoria}"/>
                                                 <button type="submit" class="btn btn-danger btn-sm">🗑 Eliminar</button>
                                             </form>
 
-                                            <a th:href="@{/categoria/modificar/}+${cat.idCategoria}" class="btn btn-warning btn-sm">✏ Actualizar</a>
+                                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/categoria/modificar/}+${cat.idCategoria}" class="btn btn-warning btn-sm">✏ Actualizar</a>
                                         </td>
                                     </tr>
                                 </tbody>

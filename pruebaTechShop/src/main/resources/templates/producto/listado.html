@@ -51,12 +51,13 @@
                                         </td>
 
                                         <td>
-                                            <form th:action="@{/producto/eliminar}" method="post" style="display:inline;">
+                                            <!-- RETO Lec09: estas acciones solo son permitidas por quien tiene perfil ADMIN -->
+                                            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/producto/eliminar}" method="post" style="display:inline;">
                                                 <input type="hidden" name="idProducto" th:value="${prod.idProducto}"/>
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                             </form>
 
-                                            <a th:href="@{/producto/modificar/}+${prod.idProducto}" class="btn btn-warning btn-sm"><i class="fas fa-pen"></i></a>
+                                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/producto/modificar/}+${prod.idProducto}" class="btn btn-warning btn-sm"><i class="fas fa-pen"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>

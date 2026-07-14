@@ -28,10 +28,11 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <ul class="navbar-nav">
-                            <li class="nav-item px-2">
+                            <!-- Solo ADMIN o VENDEDOR ven los listados -->
+                            <li class="nav-item px-2" sec:authorize="hasRole('ROLE_VENDEDOR') or hasRole('ROLE_ADMIN')">
                                 <a class="nav-link" th:href="@{/categoria/listado}">[[#{plantilla.categorias}]]</a>
                             </li>
-                            <li class="nav-item px-2">
+                            <li class="nav-item px-2" sec:authorize="hasRole('ROLE_VENDEDOR') or hasRole('ROLE_ADMIN')">
                                 <a class="nav-link" th:href="@{/producto/listado}">Productos</a>                    </li>
                             <li class="nav-item px-2">
                                 <a class="nav-link" th:href="@{/pruebas/listado}">Consultas</a>
@@ -49,6 +50,26 @@
                                     <li><a class="dropdown-item" th:href="@{/(lang=fr)}">Française</a></li>
                                     <li><a class="dropdown-item" th:href="@{/(lang=pt)}">Portugaise</a></li>
                                 </ul>
+                            </li>
+                            <!-- Ícono para hacer login (solo si NO hay sesión) -->
+                            <li class="nav-item px-2" sec:authorize="!isAuthenticated()">
+                                <a class="nav-link" th:href="@{/login}" th:title="#{login.login}">
+                                    <i class="fas fa-sign-in-alt"></i> [[#{login.login}]]
+                                </a>
+                            </li>
+                            <!-- Nombre del usuario autenticado -->
+                            <li class="nav-item px-2" sec:authorize="isAuthenticated()">
+                                <span class="nav-link">
+                                    <i class="fas fa-user"></i> <span sec:authentication="name">usuario</span>
+                                </span>
+                            </li>
+                            <!-- Ícono para logout (solo con sesión activa) -->
+                            <li class="nav-item px-2" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/logout}" method="post" class="d-inline">
+                                    <button type="submit" class="nav-link btn btn-link p-0 border-0 text-reset" style="line-height: inherit;" title="Logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>

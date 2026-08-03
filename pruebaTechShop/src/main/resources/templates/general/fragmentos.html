@@ -57,10 +57,13 @@
                                     <i class="fas fa-sign-in-alt"></i> [[#{login.login}]]
                                 </a>
                             </li>
-                            <!-- Nombre del usuario autenticado -->
+                            <!-- Foto y nombre del usuario autenticado (la foto la guarda
+                                 UsuarioDetailsService en la sesión al hacer login) -->
                             <li class="nav-item px-2" sec:authorize="isAuthenticated()">
                                 <span class="nav-link">
-                                    <i class="fas fa-user"></i> <span sec:authentication="name">usuario</span>
+                                    <img th:src="@{${session.imagenUsuario}}"
+                                         alt="your image" height="40" class="rounded-circle"/>
+                                    <span sec:authentication="name" class="ms-1">usuario</span>
                                 </span>
                             </li>
                             <!-- Ícono para logout (solo con sesión activa) -->

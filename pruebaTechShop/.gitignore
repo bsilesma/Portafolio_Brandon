@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Secretos: NUNCA subir al repositorio ###
+# Credenciales del correo (clave de aplicacion de Google)
+src/main/resources/application-local.properties
+# Llave privada de la cuenta de servicio de Firebase
+src/main/resources/Firebase/techshop-key.json

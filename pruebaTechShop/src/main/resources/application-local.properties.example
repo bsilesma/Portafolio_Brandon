@@ -1,0 +1,12 @@
+# ============================================================================
+# PLANTILLA. Copie este archivo como "application-local.properties" (en esta
+# misma carpeta) y complete los valores reales. Ese archivo esta en .gitignore,
+# asi que sus credenciales nunca se suben al repositorio.
+#
+# La contrasena NO es la de Gmail: es una "clave de aplicacion" de 16 digitos
+# que se genera en https://myaccount.google.com/apppasswords y requiere tener
+# activada la verificacion en dos pasos.
+# ============================================================================
+
+spring.mail.username=sucuenta@gmail.com
+spring.mail.password=los16digitossinespacios

@@ -34,6 +34,10 @@
                             </li>
                             <li class="nav-item px-2" sec:authorize="hasRole('ROLE_VENDEDOR') or hasRole('ROLE_ADMIN')">
                                 <a class="nav-link" th:href="@{/producto/listado}">Productos</a>                    </li>
+                            <!-- Lec11: CRUD de usuarios -->
+                            <li class="nav-item px-2" sec:authorize="hasRole('ROLE_VENDEDOR') or hasRole('ROLE_ADMIN')">
+                                <a class="nav-link" th:href="@{/usuario/listado}">[[#{plantilla.usuarios}]]</a>
+                            </li>
                             <li class="nav-item px-2">
                                 <a class="nav-link" th:href="@{/pruebas/listado}">Consultas</a>
                             </li>

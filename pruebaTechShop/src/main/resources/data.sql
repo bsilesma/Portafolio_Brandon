@@ -8,7 +8,7 @@
 INSERT IGNORE INTO rol (id_rol, rol) VALUES
     (1, 'ADMIN'),
     (2, 'VENDEDOR'),
-    (3, 'USUARIO');
+    (3, 'USER');
 
 -- --- Usuarios ----------------------------------------------------------------
 -- Las contraseñas están encriptadas con BCrypt (las mismas de la Lec09):

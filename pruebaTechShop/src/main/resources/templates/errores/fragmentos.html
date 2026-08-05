@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <body>
+
+        <!-- Lec12: fragmento que devuelve /carrito/agregar cuando la operación falla
+             (por ejemplo, sin stock). Se pinta por AJAX dentro de #resultBlock. -->
+        <div th:fragment="errorMensaje" class="alert alert-danger py-1 px-3 mb-0" role="alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span th:text="${errorMensaje}">Ocurrió un error.</span>
+        </div>
+
+    </body>
+</html>

@@ -59,10 +59,12 @@
                                 <span th:if="${p.existencias > 0}" class="badge text-bg-success ms-2" th:text="${p.existencias} + ' unidades'"></span>
                                 <span th:unless="${p.existencias > 0}" class="badge text-bg-danger ms-2">Agotado</span>
                             </div>
-                            <form th:action="@{/carrito/agregar}" th:method="POST" class="d-inline">
+                            <form th:action="@{/carrito/agregar}" method="post" class="d-inline">
                                 <input type="hidden" th:value="${p.idProducto}" name="idProducto"/>
-                                <button type="submit" 
-                                        class="btn btn-sm btn-primary" 
+                                <!-- Lec12: type="button" porque addCart envía el form por AJAX.
+                                     Con type="submit" se enviaría dos veces y la página se rompería. -->
+                                <button type="button"
+                                        class="btn btn-sm btn-primary"
                                         th:disabled="${p.existencias == 0}"
                                         onclick="addCart(this.form)">
                                     <i class="fas fa-cart-plus"></i>

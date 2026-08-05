@@ -40,7 +40,10 @@ INSERT IGNORE INTO ruta (ruta, id_rol, requiere_rol) VALUES
     ('/consultas/**',     NULL, 0),
     ('/registro/**',      NULL, 0),
     ('/login',            NULL, 0),
-    ('/acceso_denegado',  NULL, 0);
+    ('/acceso_denegado',  NULL, 0),
+    -- /error es la página a la que Spring Boot reenvía cualquier 404 o 500. Si no es
+    -- pública, esos errores terminan redirigiendo al login en vez de mostrarse.
+    ('/error',            NULL, 0);
 
 -- --- Rutas exclusivas de ADMIN (crear, modificar, eliminar) ------------------
 INSERT IGNORE INTO ruta (ruta, id_rol, requiere_rol) VALUES

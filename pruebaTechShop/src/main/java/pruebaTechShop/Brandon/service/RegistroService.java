@@ -3,7 +3,6 @@ package pruebaTechShop.Brandon.service;
 import jakarta.mail.MessagingException;
 import java.util.Locale;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,11 +18,14 @@ public class RegistroService {
     private final CorreoService correoService;
     private final UsuarioService usuarioService;
     private final MessageSource messageSource;
+    private final ConstanteService constanteService;
 
-    public RegistroService(CorreoService correoService, UsuarioService usuarioService, MessageSource messageSource) {
+    public RegistroService(CorreoService correoService, UsuarioService usuarioService,
+            MessageSource messageSource, ConstanteService constanteService) {
         this.correoService = correoService;
         this.usuarioService = usuarioService;
         this.messageSource = messageSource;
+        this.constanteService = constanteService;
     }
 
     //Este método se usa en el enlace del correo enviado...
@@ -115,20 +117,24 @@ public class RegistroService {
         return clave;
     }
 
-    //Ojo cómo le lee una informacion del application.properties
-    @Value("${servidor.http}")
-    private String servidor;
+    /* Lec13: la dirección del servidor ya no se lee de application.properties sino de la
+       tabla constante, así se puede cambiar desde la pantalla de Constantes sin tocar el
+       código. Se consulta al momento de enviar el correo para que el cambio aplique de
+       inmediato, sin reiniciar la aplicación. */
+    private String getServidor() {
+        return constanteService.getValor("servidor.http", "http://localhost:8080");
+    }
 
     private void enviaCorreoActivar(Usuario usuario, String clave) throws MessagingException {
         String mensaje = messageSource.getMessage("registro.correo.activar", null, Locale.getDefault());
-        mensaje = String.format(mensaje, usuario.getNombre(), usuario.getApellidos(), servidor, usuario.getUsername(), clave);
+        mensaje = String.format(mensaje, usuario.getNombre(), usuario.getApellidos(), getServidor(), usuario.getUsername(), clave);
         String asunto = messageSource.getMessage("registro.mensaje.activacion", null, Locale.getDefault());
         correoService.enviarCorreoHtml(usuario.getCorreo(), asunto, mensaje);
     }
 
     private void enviaCorreoRecordar(Usuario usuario, String clave) throws MessagingException {
         String mensaje = messageSource.getMessage("registro.correo.recordar", null, Locale.getDefault());
-        mensaje = String.format(mensaje, usuario.getNombre(), usuario.getApellidos(), servidor, usuario.getUsername(), clave);
+        mensaje = String.format(mensaje, usuario.getNombre(), usuario.getApellidos(), getServidor(), usuario.getUsername(), clave);
         String asunto = messageSource.getMessage("registro.mensaje.recordar", null, Locale.getDefault());
         correoService.enviarCorreoHtml(usuario.getCorreo(), asunto, mensaje);
     }

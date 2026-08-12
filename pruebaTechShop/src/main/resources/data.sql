@@ -58,13 +58,22 @@ INSERT IGNORE INTO ruta (ruta, id_rol, requiere_rol) VALUES
     ('/usuario/nuevo',          1, 1),
     ('/usuario/guardar',        1, 1),
     ('/usuario/modificar/**',   1, 1),
-    ('/usuario/eliminar/**',    1, 1);
+    ('/usuario/eliminar/**',    1, 1),
+    -- Lec13: administración de constantes y de los roles de cada usuario
+    ('/constante/**',           1, 1),
+    ('/usuario_rol/**',         1, 1);
 
 -- --- Listados: solo lectura, rol VENDEDOR (juan lo tiene también) ------------
 INSERT IGNORE INTO ruta (ruta, id_rol, requiere_rol) VALUES
     ('/producto/listado',  2, 1),
     ('/categoria/listado', 2, 1),
     ('/usuario/listado',   2, 1);
+
+-- --- Constantes del sistema (Lec13) ------------------------------------------
+-- servidor.http se usa para armar el enlace de activación que viaja en el correo,
+-- por eso debe incluir el puerto.
+INSERT IGNORE INTO constante (atributo, valor) VALUES
+    ('servidor.http', 'http://localhost:8080');
 
 -- --- Rutas del cliente final -------------------------------------------------
 INSERT IGNORE INTO ruta (ruta, id_rol, requiere_rol) VALUES

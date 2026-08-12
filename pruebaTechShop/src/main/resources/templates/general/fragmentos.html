@@ -47,6 +47,17 @@
                             <li class="nav-item px-2">
                                 <a class="nav-link" th:href="@{/pruebas/listado}">Consultas</a>
                             </li>
+                            <!-- Lec13: administración del sistema, solo ADMIN -->
+                            <li class="nav-item dropdown px-2" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                                   href="#" role="button" aria-expanded="false">
+                                    [[#{plantilla.admin}]]
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/constante/listado}">[[#{plantilla.constantes}]]</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/usuario_rol/mantenimiento}">[[#{plantilla.permisos}]]</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         <!-- Lec12: aquí cae por AJAX el botón "Ver Carrito" con el total -->
                         <div id="resultBlock"></div>

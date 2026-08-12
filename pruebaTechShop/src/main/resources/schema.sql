@@ -49,6 +49,15 @@ CREATE TABLE IF NOT EXISTS ruta (
     CONSTRAINT fk_ruta_rol FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
 );
 
+-- Lec13: parámetros del sistema editables desde la aplicación, sin tocar el código.
+CREATE TABLE IF NOT EXISTS constante (
+    id_constante       INT AUTO_INCREMENT PRIMARY KEY,
+    atributo           VARCHAR(25) NOT NULL UNIQUE,
+    valor              VARCHAR(150) NOT NULL,
+    fecha_creacion     TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Lec12: encabezado de la factura que se genera al procesar el carrito de compras.
 CREATE TABLE IF NOT EXISTS factura (
     id_factura         INT AUTO_INCREMENT PRIMARY KEY,

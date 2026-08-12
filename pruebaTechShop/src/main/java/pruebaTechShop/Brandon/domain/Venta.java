@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/* Lec12: línea de detalle de una factura (un producto y su cantidad). */
+// Lec12: línea de detalle de una factura (un producto y su cantidad).
 @Entity
 @Table(name = "venta")
 public class Venta implements Serializable {
@@ -38,7 +38,6 @@ public class Venta implements Serializable {
     public Venta() {
     }
 
-    // --- GETTERS Y SETTERS MANUALES ---
     public Integer getIdVenta() {
         return idVenta;
     }

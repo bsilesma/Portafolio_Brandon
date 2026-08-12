@@ -13,16 +13,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import pruebaTechShop.Brandon.domain.Ruta;
 import pruebaTechShop.Brandon.service.RutaService;
 
-/* Lec10: la configuración de seguridad ya no usa arreglos String[] codificados en el
-   código; ahora las reglas de acceso se leen de la tabla ruta mediante RutaService. */
+// Lec10: la configuración de seguridad ya no usa arreglos String[] codificados en el
+// código; ahora las reglas de acceso se leen de la tabla ruta mediante RutaService.
 @Configuration
 public class SecurityConfig {
 
-    //Este método es quien genera el proceso de autorización...
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, @Lazy RutaService rutaService)
             throws Exception {
-
         var rutas = rutaService.getRutas();
 
         http.authorizeHttpRequests(requests -> {
@@ -35,21 +33,21 @@ public class SecurityConfig {
             }
             requests.anyRequest().authenticated();
         });
-        http.formLogin(form -> form // Configuración de formulario de login
+        http.formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/", true)
                 .failureUrl("/login?error=true")
                 .permitAll()
-        ).logout(logout -> logout // Configuración de logout
+        ).logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout=true")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
-        ).exceptionHandling(exceptions -> exceptions // Manejo de excepciones
+        ).exceptionHandling(exceptions -> exceptions
                 .accessDeniedPage("/acceso_denegado")
-        ).sessionManagement(session -> session // Configuración de sesiones
+        ).sessionManagement(session -> session
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false)
         );
@@ -61,8 +59,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    /* Los usuarios en memoria de la Lec09 fueron reemplazados por UsuarioDetailsService,
-       que carga los usuarios y sus roles desde la base de datos. */
+    // Los usuarios y sus roles se cargan de la base mediante UsuarioDetailsService.
     @Autowired
     public void configurerGlobal(AuthenticationManagerBuilder build,
             @Lazy PasswordEncoder passwordEncoder,

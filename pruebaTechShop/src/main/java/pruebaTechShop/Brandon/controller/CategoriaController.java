@@ -38,7 +38,6 @@ public class CategoriaController {
         return "redirect:/categoria/listado";
     }
 
-    // --- NUEVO: Ruta para editar (Slide 17) ---
     @GetMapping("/modificar/{idCategoria}")
     public String modificar(Categoria categoria, Model model) {
         categoria = categoriaService.getCategoria(categoria);
@@ -50,13 +49,10 @@ public class CategoriaController {
     public String eliminar(Categoria categoria, RedirectAttributes redirectAttributes) {
         try {
             categoriaService.delete(categoria);
-            // Si logra eliminar, mandamos el mensaje de éxito (Toast verde)
             redirectAttributes.addFlashAttribute("todoOk", "La categoría fue eliminada con éxito.");
         } catch (org.springframework.dao.DataIntegrityViolationException e) {
-            // Si la base de datos bloquea la eliminación, mandamos error (Toast rojo)
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar la categoría porque tiene productos asociados.");
         } catch (Exception e) {
-            // Para cualquier otro error inesperado
             redirectAttributes.addFlashAttribute("error", "Ocurrió un error inesperado al intentar eliminar.");
         }   
         return "redirect:/categoria/listado";

@@ -9,10 +9,10 @@ import pruebaTechShop.Brandon.domain.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-    // Lec10: busca al usuario por el username del formulario de login, si está activo.
+    // Busca por el username del formulario de login, solo si la cuenta está activa.
     public Optional<Usuario> findByUsernameAndActivoTrue(String username);
 
-    // --- Lec11: consultas derivadas para el CRUD y el registro de usuarios ---
+    // Consultas derivadas para el CRUD y el registro de usuarios.
     public List<Usuario> findByActivoTrue();
 
     public Optional<Usuario> findByUsername(String username);

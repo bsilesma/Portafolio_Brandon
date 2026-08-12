@@ -3,16 +3,14 @@ package pruebaTechShop.Brandon.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-/* Lec12: línea del carrito de compras. NO es una entidad: vive únicamente en la
-   sesión del usuario hasta que se procesa la compra y se convierte en Venta. */
+// Lec12: línea del carrito de compras. NO es una entidad: vive únicamente en la
+// sesión del usuario hasta que se procesa la compra y se convierte en Venta.
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // Referencia a la entidad Producto (ya cargada de la BD)
     private Producto producto;
 
-    // Cantidad deseada por el usuario
     private int cantidad;
 
     private BigDecimal precioHistorico;
@@ -20,12 +18,10 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    // Método para calcular el subtotal
     public BigDecimal getSubTotal() {
         return producto.getPrecio().multiply(new BigDecimal(cantidad));
     }
 
-    // --- GETTERS Y SETTERS MANUALES ---
     public Producto getProducto() {
         return producto;
     }

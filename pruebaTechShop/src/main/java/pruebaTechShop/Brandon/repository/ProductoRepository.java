@@ -7,19 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pruebaTechShop.Brandon.domain.Producto;
 
-// ¡Aquí está la magia! Cambiamos Long por Integer
+// El Integer coincide con el tipo de la llave primaria de Producto.
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
-    // 1. Consulta DERIVADA: Spring Data JPA construye la consulta a partir del nombre del método.
-    //    Busca productos con precio dentro de un rango y los ordena por precio ascendente.
+    // Consulta derivada: Spring Data arma el SQL a partir del nombre del método.
     List<Producto> findByPrecioBetweenOrderByPrecioAsc(BigDecimal precioInf, BigDecimal precioSup);
 
-    // 2. Consulta JPQL: se escribe explícitamente sobre las ENTIDADES (Producto) y sus atributos.
+    // JPQL: se escribe sobre la entidad Producto y sus atributos, no sobre la tabla.
     @Query("SELECT p FROM Producto p WHERE p.precio BETWEEN :precioInf AND :precioSup ORDER BY p.precio ASC")
     List<Producto> consultaJPQL(@Param("precioInf") BigDecimal precioInf,
                                 @Param("precioSup") BigDecimal precioSup);
 
-    // 3. Consulta SQL NATIVA: se ejecuta directamente sobre las TABLAS y columnas de la base de datos.
+    // SQL nativa: se ejecuta tal cual contra la tabla y las columnas de MySQL.
     @Query(value = "SELECT * FROM producto WHERE precio BETWEEN :precioInf AND :precioSup ORDER BY precio ASC",
             nativeQuery = true)
     List<Producto> consultaSQL(@Param("precioInf") BigDecimal precioInf,

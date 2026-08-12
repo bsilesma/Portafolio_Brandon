@@ -3,8 +3,8 @@ package pruebaTechShop.Brandon.domain;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
-/* Lec10: mapea la tabla ruta. Permite definir las reglas de acceso (URL + rol) en la
-   base de datos, en lugar de tenerlas codificadas como arreglos String[] en el código. */
+// Lec10: mapea la tabla ruta. Permite definir las reglas de acceso (URL + rol) en la
+// base de datos, en lugar de tenerlas codificadas como arreglos String[] en el código.
 @Entity
 @Table(name = "ruta")
 public class Ruta implements Serializable {
@@ -27,7 +27,6 @@ public class Ruta implements Serializable {
     public Ruta() {
     }
 
-    // --- GETTERS Y SETTERS MANUALES ---
     public Integer getIdRuta() {
         return idRuta;
     }

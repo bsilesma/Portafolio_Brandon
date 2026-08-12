@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-/* Lec11: envía correos en formato HTML usando la configuración spring.mail.* */
+// Lec11: envía correos en formato HTML usando la configuración spring.mail.*
 @Service
 public class CorreoService {
 
@@ -19,7 +19,6 @@ public class CorreoService {
     public void enviarCorreoHtml(String para,
             String asunto,
             String contenido) throws MessagingException {
-
         MimeMessage mensaje = mailSender.createMimeMessage();
         MimeMessageHelper correo = new MimeMessageHelper(mensaje, true);
 

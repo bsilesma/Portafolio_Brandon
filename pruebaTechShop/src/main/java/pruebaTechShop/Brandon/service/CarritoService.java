@@ -18,8 +18,8 @@ import pruebaTechShop.Brandon.repository.FacturaRepository;
 import pruebaTechShop.Brandon.repository.ProductoRepository;
 import pruebaTechShop.Brandon.repository.VentaRepository;
 
-/* Lec12: lógica del carrito de compras. El carrito vive en la sesión HTTP hasta
-   que se factura; ahí se convierte en Factura + Ventas y se descuenta el stock. */
+// Lec12: lógica del carrito de compras. El carrito vive en la sesión HTTP hasta
+// que se factura; ahí se convierte en Factura + Ventas y se descuenta el stock.
 @Service
 public class CarritoService {
 
@@ -37,7 +37,6 @@ public class CarritoService {
         this.ventaRepository = ventaRepository;
     }
 
-    // --- 1. Gestión de Sesión ---
     public List<Item> obtenerCarrito(HttpSession session) {
         @SuppressWarnings("unchecked")
         List<Item> carrito = (List<Item>) session.getAttribute(ATTRIBUTE_CARRITO);
@@ -52,11 +51,9 @@ public class CarritoService {
     }
 
     public void agregarProducto(List<Item> carrito, Integer idProducto) {
-        // 1. Buscar el producto en BD
         Producto producto = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado."));
 
-        // 2. Buscar si el item ya existe en el carrito
         Optional<Item> itemExistente = carrito.stream()
                 .filter(i -> i.getProducto().getIdProducto().equals(idProducto))
                 .findFirst();
@@ -67,18 +64,15 @@ public class CarritoService {
             Item item = itemExistente.get();
             int nuevaCantidad = item.getCantidad() + cantidad;
 
-            // 3. (CRÍTICO) Validación de Stock
             if (nuevaCantidad > producto.getExistencias()) {
                 throw new RuntimeException("Stock insuficiente para agregar " + cantidad + " unidades.");
             }
             item.setCantidad(nuevaCantidad);
         } else {
-            // 4. (Nuevo Item) Validación de Stock
             if (cantidad > producto.getExistencias()) {
                 throw new RuntimeException("Stock insuficiente para agregar " + cantidad + " unidades.");
             }
 
-            // 5. Crear y añadir nuevo Item (Composición)
             Item nuevoItem = new Item();
             nuevoItem.setProducto(producto);
             nuevoItem.setCantidad(cantidad);
@@ -98,7 +92,6 @@ public class CarritoService {
     }
 
     public void eliminarItem(List<Item> carrito, Integer idProducto) {
-        // Usar List.removeIf es una forma concisa de eliminar por condición
         carrito.removeIf(item -> item.getProducto().getIdProducto().equals(idProducto));
     }
 
@@ -133,7 +126,6 @@ public class CarritoService {
     }
 
     public BigDecimal calcularTotal(List<Item> carrito) {
-        // Sumar todos los subtotales de la lista
         return carrito.stream()
                 .map(Item::getSubTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -153,7 +145,6 @@ public class CarritoService {
             throw new RuntimeException("El carrito está vacío para procesar la compra.");
         }
 
-        // 1. CREAR Y PERSISTIR FACTURA
         Factura factura = new Factura();
         factura.setUsuario(usuario);
         factura.setFecha(LocalDateTime.now());
@@ -163,9 +154,8 @@ public class CarritoService {
         factura.setFechaModificacion(LocalDateTime.now());
         factura = facturaRepository.save(factura); // Persistir para obtener el idFactura
 
-        // 2. CREAR Y PERSISTIR LINEAS DE VENTA (Venta) y ACTUALIZAR STOCK
         for (Item item : carrito) {
-            // a. Verificar stock final antes de persistir (doble chequeo)
+            // Se revalida contra la base: el stock pudo cambiar mientras el carrito estaba en sesión.
             Producto producto = productoRepository.findById(item.getProducto().getIdProducto())
                     .orElseThrow(() -> new RuntimeException("El producto ya no existe."));
             if (item.getCantidad() > producto.getExistencias()) {
@@ -173,7 +163,6 @@ public class CarritoService {
                         + producto.getDescripcion() + " ya no tiene suficiente stock.");
             }
 
-            // b. Crear entidad Venta (Línea de detalle)
             Venta venta = new Venta();
             venta.setFactura(factura);
             venta.setProducto(producto);
@@ -183,12 +172,10 @@ public class CarritoService {
             venta.setFechaModificacion(LocalDateTime.now());
             ventaRepository.save(venta);
 
-            // c. Actualizar inventario (Stock)
             producto.setExistencias(producto.getExistencias() - item.getCantidad());
             productoRepository.save(producto);
         }
 
-        // 3. El carrito lo limpia el controlador después de una compra exitosa
         return factura;
     }
 }

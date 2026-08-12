@@ -42,14 +42,11 @@ public class UsuarioController {
             @RequestParam MultipartFile imagenFile,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            // Redirige al formulario de edición/creación para mostrar errores
             redirectAttributes.addFlashAttribute("error",
                     messageSource.getMessage("usuario.error04", null, Locale.getDefault()));
-            // Si no hay idUsuario, redirige al listado con modal para agregar
             if (usuario.getIdUsuario() == null) {
                 return "redirect:/usuario/listado";
             }
-            // Si hay idUsuario, redirige al formulario de modificación
             return "redirect:/usuario/modificar/" + usuario.getIdUsuario();
         }
         try {
@@ -80,17 +77,14 @@ public class UsuarioController {
                     messageSource.getMessage("mensaje.eliminado", null,
                             Locale.getDefault()));
         } catch (IllegalArgumentException e) {
-            // Captura argumento inválido para el mensaje de "no existe"
             redirectAttributes.addFlashAttribute("error",
                     messageSource.getMessage("usuario.error01", null,
                             Locale.getDefault()));
         } catch (IllegalStateException e) {
-            // Captura estado ilegal para el mensaje de "datos asociados"
             redirectAttributes.addFlashAttribute("error",
                     messageSource.getMessage("usuario.error02", null,
                             Locale.getDefault()));
         } catch (NoSuchMessageException e) {
-            // Captura cualquier otra excepción inesperada
             redirectAttributes.addFlashAttribute("error",
                     messageSource.getMessage("usuario.error03", null,
                             Locale.getDefault()));

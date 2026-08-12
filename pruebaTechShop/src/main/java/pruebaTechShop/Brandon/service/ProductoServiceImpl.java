@@ -32,7 +32,6 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     @Transactional(readOnly = true)
     public Producto getProducto(Producto producto) {
-        // Ahora sí coinciden los tipos (Integer con Integer)
         return productoRepository.findById(producto.getIdProducto()).orElse(null);
     }
 
@@ -43,7 +42,6 @@ public class ProductoServiceImpl implements ProductoService {
         
         if (!imagenFile.isEmpty()) {
             try {
-                // Pasamos el ID directamente porque ya es Integer
                 String rutaImagen = firebaseStorageService.uploadImage(
                         imagenFile, "producto", producto.getIdProducto());
                 

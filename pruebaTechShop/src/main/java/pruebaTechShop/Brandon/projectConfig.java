@@ -15,7 +15,6 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class projectConfig implements WebMvcConfigurer {
 
-    /* localeResolver determina el idioma por defecto de la sesión */
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
@@ -25,7 +24,6 @@ public class projectConfig implements WebMvcConfigurer {
         return slr;
     }
 
-    /* localeChangeInterceptor crea una vía para conocer cómo se determina el cambio de idioma */
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
@@ -33,13 +31,12 @@ public class projectConfig implements WebMvcConfigurer {
         return lci;
     }
 
-    /* addInterceptors es el responsable de registrar el interceptor en el ambiente de ejecución */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
-    /* Permite utilizar textos/mensajes guardados en archivos de propiedades externos */
+    // Permite utilizar textos/mensajes guardados en archivos de propiedades externos
     @Bean("messageSource")
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -48,8 +45,8 @@ public class projectConfig implements WebMvcConfigurer {
         return messageSource;
     }
 
-    /* Vistas simples que no necesitan un controlador propio (login y acceso denegado).
-       Nota: "/" NO se registra aquí porque ya lo maneja IndexController. */
+    // Vistas simples que no necesitan un controlador propio (login y acceso denegado).
+    // Nota: "/" NO se registra aquí porque ya lo maneja IndexController.
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");

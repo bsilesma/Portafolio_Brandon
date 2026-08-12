@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/* Lec13: parámetros del sistema guardados en base de datos, para poder cambiarlos
-   sin tocar el código ni volver a desplegar la aplicación. */
+// Lec13: parámetros del sistema guardados en base de datos, para poder cambiarlos
+// sin tocar el código ni volver a desplegar la aplicación.
 @Entity
 @Table(name = "constante")
 public class Constante implements Serializable {
@@ -32,7 +32,6 @@ public class Constante implements Serializable {
     public Constante() {
     }
 
-    // --- GETTERS Y SETTERS MANUALES ---
     public Integer getIdConstante() {
         return idConstante;
     }

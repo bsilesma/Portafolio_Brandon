@@ -6,5 +6,4 @@ import pruebaTechShop.Brandon.domain.Venta;
 
 @Repository
 public interface VentaRepository extends JpaRepository<Venta, Integer> {
-
 }

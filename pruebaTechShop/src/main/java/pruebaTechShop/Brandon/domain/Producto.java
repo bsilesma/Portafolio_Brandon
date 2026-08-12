@@ -38,7 +38,7 @@ public class Producto implements Serializable {
 
     private boolean activo;
 
-    // Conectamos Producto con Categoría en la base de datos [cite: 151, 152, 153]
+    // Cada producto pertenece a una categoría.
     @ManyToOne
     @JoinColumn(name = "id_categoria")
     private Categoria categoria;
@@ -46,7 +46,6 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    // --- GETTERS Y SETTERS MANUALES (Para evitar el error de Lombok) ---
     public Integer getIdProducto() {
         return idProducto;
     }

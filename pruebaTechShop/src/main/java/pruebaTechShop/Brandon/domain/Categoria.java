@@ -24,16 +24,13 @@ public class Categoria implements Serializable {
     @Column(name = "activo")
     private boolean activo;
 
-    // --- NUEVA RELACIÓN (Semana 6) ---
-    // Relación de uno a muchos con la clase Producto
-    // Sin "cascade" ni "orphanRemoval" para evitar la propagación de operaciones.
+    // Sin cascade ni orphanRemoval: borrar una categoría no debe borrar sus productos.
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos;
 
     public Categoria() {
     }
 
-    // --- GETTERS Y SETTERS MANUALES ---
     public Integer getIdCategoria() {
         return idCategoria;
     }

@@ -17,7 +17,6 @@ public class ConsultaController {
     @Autowired
     private ProductoService productoService;
 
-    // Muestra la página con los formularios de consulta y (por defecto) todos los productos.
     @GetMapping("/listado")
     public String listado(Model model) {
         var productos = productoService.getProductos(false);

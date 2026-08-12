@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import pruebaTechShop.Brandon.domain.Usuario;
 
-/* Lec11: proceso de registro de nuevos usuarios y recuperación de la cuenta. */
+// Lec11: proceso de registro de nuevos usuarios y recuperación de la cuenta.
 @Service
 public class RegistroService {
 
@@ -28,21 +28,19 @@ public class RegistroService {
         this.constanteService = constanteService;
     }
 
-    //Este método se usa en el enlace del correo enviado...
     public Model activar(Model model, String username, String clave) {
         Optional<Usuario> usuario = usuarioService.getUsuarioPorUsernameYPassword(username, clave);
-        if (!usuario.isEmpty()) {  //Si estaba...
+        if (!usuario.isEmpty()) {
             model.addAttribute("usuario", usuario.get());
-        } else { //hay que devolver error
+        } else {
             model.addAttribute("titulo", messageSource.getMessage("registro.activar", null, Locale.getDefault()));
             model.addAttribute("mensaje", messageSource.getMessage("registro.activar.error", null, Locale.getDefault()));
         }
         return model;
     }
 
-    //Este método es el que finalmente crea el usuario en el sistema.
-    //En el formulario de activación el usuario puede editar su username y su correo,
-    //así que puede chocar con los de otra cuenta: se devuelve true solo si se activó.
+    // En la activación el usuario puede editar su username y correo, y chocar con otra
+    // cuenta: devuelve true solo si se logró activar.
     public boolean activar(Usuario usuario, MultipartFile imagenFile, Model model) {
         try {
             usuario.setActivo(true);
@@ -57,8 +55,6 @@ public class RegistroService {
 
     public Model crearUsuario(Model model, Usuario usuario) throws MessagingException {
         String mensaje;
-        // Si el username o el correo ya están registrados no se intenta crear nada:
-        // se devuelve el mensaje correspondiente.
         if (usuarioService.existeUsuarioPorUsernameOCorreo(usuario.getUsername(), usuario.getCorreo())) {
             mensaje = String.format(messageSource.getMessage("registro.mensaje.usuario.o.correo", null, Locale.getDefault()), usuario.getUsername(), usuario.getCorreo());
             model.addAttribute("titulo", messageSource.getMessage("registro.activar", null, Locale.getDefault()));
@@ -73,8 +69,7 @@ public class RegistroService {
             enviaCorreoActivar(usuario, clave);
             mensaje = String.format(messageSource.getMessage("registro.mensaje.activacion.ok", null, Locale.getDefault()), usuario.getCorreo());
         } catch (MessagingException | NoSuchMessageException | DataIntegrityViolationException e) {
-            // Red de seguridad: cubre también la carrera entre dos registros simultáneos
-            // y cualquier fallo al enviar el correo.
+            // Cubre dos registros simultáneos y los fallos al enviar el correo.
             mensaje = String.format(messageSource.getMessage("registro.mensaje.usuario.o.correo", null, Locale.getDefault()), usuario.getUsername(), usuario.getCorreo());
         }
         model.addAttribute("titulo", messageSource.getMessage("registro.activar", null, Locale.getDefault()));
@@ -85,9 +80,8 @@ public class RegistroService {
     public Model recordarUsuario(Model model, Usuario usuario)
             throws MessagingException {
         String mensaje;
-        // Se busca primero por username y, si no aparece, por correo. No se consultan
-        // los dos campos a la vez porque si el username es de una cuenta y el correo de
-        // otra la consulta devolvería dos filas y fallaría.
+        // Primero por username y luego por correo: consultarlos juntos podría devolver
+        // dos filas si pertenecen a cuentas distintas, y la consulta fallaría.
         Optional<Usuario> usuarioOpt = usuarioService.getUsuarioPorUsername(usuario.getUsername());
         if (usuarioOpt.isEmpty()) {
             usuarioOpt = usuarioService.getUsuarioPorUsernameOCorreo(null, usuario.getCorreo());
@@ -117,10 +111,8 @@ public class RegistroService {
         return clave;
     }
 
-    /* Lec13: la dirección del servidor ya no se lee de application.properties sino de la
-       tabla constante, así se puede cambiar desde la pantalla de Constantes sin tocar el
-       código. Se consulta al momento de enviar el correo para que el cambio aplique de
-       inmediato, sin reiniciar la aplicación. */
+    // Sale de la tabla constante, no de application.properties. Se lee al enviar el
+    // correo para que un cambio desde la pantalla de Constantes aplique sin reiniciar.
     private String getServidor() {
         return constanteService.getValor("servidor.http", "http://localhost:8080");
     }

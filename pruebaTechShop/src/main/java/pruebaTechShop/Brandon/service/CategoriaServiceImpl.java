@@ -41,7 +41,6 @@ public class CategoriaServiceImpl implements CategoriaService {
 
         if (!imagenFile.isEmpty()) {
             try {
-                // Aquí cambiamos a uploadImage (el nombre correcto del método)
                 String rutaImagen = firebaseStorageService.uploadImage(
                         imagenFile, "categoria", categoria.getIdCategoria().intValue());
 

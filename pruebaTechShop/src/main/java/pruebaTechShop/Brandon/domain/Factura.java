@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/* Lec12: encabezado de la factura generada al procesar el carrito de compras. */
+// Lec12: encabezado de la factura generada al procesar el carrito de compras.
 @Entity
 @Table(name = "factura")
 public class Factura implements Serializable {
@@ -41,7 +41,6 @@ public class Factura implements Serializable {
     public Factura() {
     }
 
-    // --- GETTERS Y SETTERS MANUALES ---
     public Integer getIdFactura() {
         return idFactura;
     }

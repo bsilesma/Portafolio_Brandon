@@ -9,7 +9,6 @@ public interface CategoriaService {
 
     public List<Categoria> getCategorias(boolean activos);
 
-    // Estos son los nuevos métodos que necesitamos para el CRUD
     public Categoria getCategoria(Categoria categoria);
 
     public void save(Categoria categoria, MultipartFile imagenFile);

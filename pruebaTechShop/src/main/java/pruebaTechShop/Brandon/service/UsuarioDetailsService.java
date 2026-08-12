@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pruebaTechShop.Brandon.domain.Usuario;
 import pruebaTechShop.Brandon.repository.UsuarioRepository;
 
-/* Lec10: puente entre la aplicación y Spring Security. Le indica cómo encontrar
-   y cargar los datos de un usuario a partir de su username. */
+// Lec10: puente entre la aplicación y Spring Security. Le indica cómo encontrar
+// y cargar los datos de un usuario a partir de su username.
 @Service("userDetailsService")
 public class UsuarioDetailsService implements UserDetailsService {
 
@@ -25,26 +25,20 @@ public class UsuarioDetailsService implements UserDetailsService {
         this.session = session;
     }
 
-    //Este método busca el registro con el username pasado (del login), en la tabla usuario
-    //Si lo encuentra guarda la foto del usuario en una sesión, y genera los roles del usuario
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        //Se busca el usuario de ese username
         Usuario usuario = usuarioRepository.findByUsernameAndActivoTrue(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
-        //Si estamos acá... se encontró el usuario, guardamos la foto...
         session.removeAttribute("imagenUsuario");
         session.setAttribute("imagenUsuario", usuario.getRutaImagen());
 
-        //Se cargan los roles del usuario y se generan como roles de seguridad...
         var roles = usuario.getRoles().stream()
                 .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getRol()))
                 .collect(Collectors.toSet());
 
-        //Se retorna el usuario con la información de él
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
     }
 }

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-/* Lec10: mapea la tabla usuario. Sustituye a los usuarios en memoria de la Lec09. */
+// Lec10: mapea la tabla usuario. Sustituye a los usuarios en memoria de la Lec09.
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
@@ -46,8 +46,7 @@ public class Usuario implements Serializable {
 
     private boolean activo;
 
-    // Relación Many-to-Many con la entidad Rol.
-    // @JoinTable define la tabla intermedia usuario_rol que gestiona la relación.
+    // Un usuario puede tener varios roles. La tabla intermedia es usuario_rol.
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "usuario_rol",
@@ -59,7 +58,6 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    // --- GETTERS Y SETTERS MANUALES ---
     public Integer getIdUsuario() {
         return idUsuario;
     }

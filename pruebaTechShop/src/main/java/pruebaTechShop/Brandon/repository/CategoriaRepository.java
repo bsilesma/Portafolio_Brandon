@@ -3,6 +3,6 @@ package pruebaTechShop.Brandon.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pruebaTechShop.Brandon.domain.Categoria;
 
-// Cambiamos el Long por Integer para que coincida con la llave primaria de la entidad
+// El Integer coincide con el tipo de la llave primaria de Categoria.
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 }

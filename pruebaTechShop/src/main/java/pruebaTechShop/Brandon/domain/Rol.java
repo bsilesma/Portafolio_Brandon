@@ -3,7 +3,7 @@ package pruebaTechShop.Brandon.domain;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
-/* Lec10: mapea la tabla rol, que contiene los diferentes roles que puede tener un usuario */
+// Lec10: mapea la tabla rol, que contiene los diferentes roles que puede tener un usuario
 @Entity
 @Table(name = "rol")
 public class Rol implements Serializable {
@@ -21,7 +21,6 @@ public class Rol implements Serializable {
     public Rol() {
     }
 
-    // --- GETTERS Y SETTERS MANUALES ---
     public Integer getIdRol() {
         return idRol;
     }

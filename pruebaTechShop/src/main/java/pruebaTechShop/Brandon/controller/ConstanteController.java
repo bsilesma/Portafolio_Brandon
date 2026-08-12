@@ -43,7 +43,7 @@ public class ConstanteController {
             redirectAttributes.addFlashAttribute("todoOk",
                     messageSource.getMessage("mensaje.actualizado", null, Locale.getDefault()));
         } catch (DataIntegrityViolationException e) {
-            // El atributo es UNIQUE en la base: ya existe una constante con ese nombre.
+            // El atributo es UNIQUE: ya existe una constante con ese nombre.
             redirectAttributes.addFlashAttribute("error",
                     messageSource.getMessage("constante.error04", null, Locale.getDefault()));
         }

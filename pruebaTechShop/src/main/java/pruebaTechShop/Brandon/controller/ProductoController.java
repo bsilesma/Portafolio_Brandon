@@ -20,7 +20,7 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-    // Inyectamos las categorías para que el dropdown (select) funcione
+    // Las categorías alimentan el desplegable del formulario.
     @Autowired
     private CategoriaService categoriaService;
 

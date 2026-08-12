@@ -36,14 +36,12 @@ public class ConstanteService {
 
     @Transactional
     public void delete(Integer idConstante) {
-        // Verifica que la constante exista antes de intentar eliminarla
         if (!constanteRepository.existsById(idConstante)) {
             throw new IllegalArgumentException("La Constante con ID " + idConstante + " no existe.");
         }
         try {
             constanteRepository.deleteById(idConstante);
         } catch (DataIntegrityViolationException e) {
-            // Se encapsula el problema de integridad de datos
             throw new IllegalStateException("No se puede eliminar la constante. Tiene datos asociados.", e);
         }
     }
@@ -53,9 +51,8 @@ public class ConstanteService {
         return constanteRepository.findByAtributo(atributo);
     }
 
-    /* Lec13: atajo para leer el valor de una constante con un respaldo si no existe.
-       Se consulta en el momento de usarla, así un cambio desde la pantalla de
-       constantes tiene efecto sin reiniciar la aplicación. */
+    // Lee el valor de una constante, con un respaldo si no existe. Se consulta al usarla
+    // para que un cambio desde la pantalla de Constantes aplique sin reiniciar.
     @Transactional(readOnly = true)
     public String getValor(String atributo, String porDefecto) {
         return constanteRepository.findByAtributo(atributo)
